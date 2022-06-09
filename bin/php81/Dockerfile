@@ -1,4 +1,4 @@
-FROM php:8.0.19-apache-buster
+FROM php:8.1-apache-buster
 
 # Surpresses debconf complaints of trying to install apt packages interactively
 # https://github.com/moby/moby/issues/4032#issuecomment-192327844
@@ -52,7 +52,7 @@ RUN apt-get update && \
 # Workarround until imagick is available in pecl with php8 support
 # Imagick Commit to install
 # https://github.com/Imagick/imagick
-ARG IMAGICK_COMMIT="132a11fd26675db9eb9f0e9a3e2887c161875206"
+ARG IMAGICK_COMMIT="661405abe21d12003207bc8eb0963fafc2c02ee4"
 
 RUN cd /usr/local/src && \
     git clone https://github.com/Imagick/imagick && \
@@ -72,7 +72,6 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install pdo_sqlite && \
     docker-php-ext-install mysqli && \
     docker-php-ext-install curl && \
-    docker-php-ext-install tokenizer && \
     docker-php-ext-install zip && \
     docker-php-ext-install -j$(nproc) intl && \
     docker-php-ext-install mbstring && \
