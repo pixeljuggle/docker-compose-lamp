@@ -38,6 +38,7 @@ RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install curl
 RUN docker-php-ext-install tokenizer
 RUN docker-php-ext-install json
+RUN docker-php-ext-install bcmath
 
 RUN apt-get -y install zlib1g-dev
 RUN docker-php-ext-install zip
@@ -51,6 +52,12 @@ RUN docker-php-ext-install gettext
 RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ 
 RUN docker-php-ext-install -j$(nproc) gd
+
+# Insure an SSL directory exists
+RUN mkdir -p /etc/apache2/ssl
+
+# Enable SSL support
+RUN a2enmod ssl && a2enmod rewrite
 
 # Enable apache modules
 RUN a2enmod rewrite headers
